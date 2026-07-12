@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: kubernetes-webapp-deployment
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: kubernetes-webapp
+
+  template:
+    metadata:
+      labels:
+        app: kubernetes-webapp
+
+    spec:
+      containers:
+        - name: kubernetes-webapp
+          image: shubhamdocker2025/kubernetes-webapp:v1
+
+          ports:
+            - containerPort: 80
