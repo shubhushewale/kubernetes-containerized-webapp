@@ -18,8 +18,44 @@ spec:
 
     spec:
       containers:
-        - name: kubernetes-webapp
-          image: shubhamdocker2025/kubernetes-webapp:v1
+      - name: kubernetes-webapp
 
-          ports:
-            - containerPort: 80
+        image: shubhamdocker2025/kubernetes-webapp:v1
+
+        ports:
+        - containerPort: 80
+
+        envFrom:
+        - configMapRef:
+            name: webapp-config
+
+        - secretRef:
+            name: webapp-secret
+
+        resources:
+
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+
+        livenessProbe:
+
+          httpGet:
+            path: /
+            port: 80
+
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+        readinessProbe:
+
+          httpGet:
+            path: /
+            port: 80
+
+          initialDelaySeconds: 5
+          periodSeconds: 5
